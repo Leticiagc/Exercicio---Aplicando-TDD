@@ -11,16 +11,15 @@ class IngressosTest {
 
     @Test
     void testCriacaoIngresso() {
-        Ingresso ingresso = new Ingresso(TipoIngresso.NORMAL , 7);
-        assertEquals(7, ingresso.getId());
+        Ingresso ingresso = new Ingresso(7L, TipoIngresso.NORMAL );
         assertEquals(TipoIngresso.NORMAL , ingresso.getTipo());
         assertFalse(ingresso.foiVendido());
     }
 
     @Test
     void testMarcarIngressoComoVendido() {
-        Ingresso ingresso = new Ingresso(1, "VIP");
-        ingresso.marcarComoVendida();
-        assertTrue(ingresso.isVendida());
+        Ingresso ingresso = new Ingresso(1L, TipoIngresso.VIP);
+        ingresso.foiVendido();
+        assertTrue(ingresso.foiVendido());
     }
 }

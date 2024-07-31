@@ -1,12 +1,9 @@
 package com.exemplo.meuprojeto.show.entities;
 
 import java.time.LocalDate;
-import java.util.HashMap;
 import java.util.Map;
-
 import com.exemplo.meuprojeto.show.tipos.StatusFinanceiro;
 import com.exemplo.meuprojeto.show.tipos.TipoIngresso;
-
 import jakarta.persistence.Entity;
 
 @Entity
@@ -31,6 +28,10 @@ public class Show {
 
     public LocalDate getData() {
         return data;
+    }
+
+    public void addLoteShow(Lote lote) {
+        lotesIngressos.put(lote.getId(), lote);
     }
 
     public void setData(LocalDate data) {

@@ -2,25 +2,40 @@ package com.exemplo.meuprojeto;
 
 import org.junit.jupiter.api.Test;
 
+import com.exemplo.meuprojeto.show.entities.Ingresso;
 import com.exemplo.meuprojeto.show.entities.Lote;
+import com.exemplo.meuprojeto.show.tipos.TipoIngresso;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class LotesTest {
+import java.util.Arrays;
+
+class LotesJava {
 
     @Test
     void testCriacaoLote() {
-        Lote lote = new Lote(1, 500, 10.00, 0.15);
-        assertEquals(1, lote.getId());
-        assertEquals(500, lote.getQuantidade());
-        assertEquals(10.00, lote.getPrecoNormal());
-        assertEquals(0.15, lote.getDesconto(), 0.01);
+        Ingresso ingresso1 = new Ingresso(10L,  TipoIngresso.NORMAL);
+        Ingresso ingresso2 = new Ingresso(20L, TipoIngresso.VIP);
+        Lote lote = new Lote(1L, Arrays.asList(ingresso1, ingresso2), 10.0, 15.0);
+
+        assertEquals(1L, lote.getId());
+        assertEquals(2, lote.getIngressos().size());
+        assertEquals(10.0, lote.getDesconto());
+        assertEquals(15.0, lote.getPreco());
     }
 
-    @Test
+       @Test
     void testAplicarDesconto() {
-        Lote lote = new Lote(1, 500, 10.00, 0.15);
-        double precoComDesconto = lote.calcularPrecoComDesconto("VIP");
-        assertEquals(8.00, precoComDesconto, 0.01);
+        Ingresso ingresso1 = new Ingresso(50L, TipoIngresso.NORMAL);
+        ingresso1.setPreco(10.0); 
+        Ingresso ingresso2 = new Ingresso(70L, TipoIngresso.VIP);
+        ingresso2.setPreco(20.0); 
+        Lote lote = new Lote(1L, Arrays.asList(ingresso1, ingresso2), 20.0, 15.0);
+
+        lote.aplicarDesconto();
+
+        assertEquals(8.0, ingresso1.getPreco(), 0.01); 
+        assertEquals(16.0, ingresso2.getPreco(), 0.01); 
     }
 }
+

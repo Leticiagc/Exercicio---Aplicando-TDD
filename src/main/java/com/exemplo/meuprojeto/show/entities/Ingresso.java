@@ -20,7 +20,7 @@ public class Ingresso {
     private boolean foiVendido;
 
   
-    public Ingresso(TipoIngresso tipoIngresso, Long id) {
+    public Ingresso(Long id, TipoIngresso tipoIngresso) {
         this.id = id;
         this.tipoIngresso = tipoIngresso;
     }
