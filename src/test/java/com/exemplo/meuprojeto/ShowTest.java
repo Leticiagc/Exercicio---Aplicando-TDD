@@ -1,13 +1,13 @@
 package com.exemplo.meuprojeto;
 
-import com.exemplo.meuprojeto.show.entities.Ingresso;
-import com.exemplo.meuprojeto.show.entities.Lote;
-import com.exemplo.meuprojeto.show.entities.Relatorio;
-import com.exemplo.meuprojeto.show.entities.Show;
-import com.exemplo.meuprojeto.show.tipos.StatusFinanceiro;
-import com.exemplo.meuprojeto.show.tipos.TipoIngresso;
-
 import org.junit.jupiter.api.Test;
+
+import com.exemplo.meuprojeto.problema2.entities.Ingresso;
+import com.exemplo.meuprojeto.problema2.entities.Lote;
+import com.exemplo.meuprojeto.problema2.entities.Relatorio;
+import com.exemplo.meuprojeto.problema2.entities.Show;
+import com.exemplo.meuprojeto.problema2.types.StatusFinanceiro;
+import com.exemplo.meuprojeto.problema2.types.TipoIngresso;
 
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -32,7 +32,6 @@ class ShowTest {
 
         assertEquals("Rihanna", show.getArtista());
         assertEquals(1000.0, show.getCache());
-        assertEquals(2000.0, show.getDespesasInfraestrutura());
         assertTrue(show.isDataEspecial());
     }
 

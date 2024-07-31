@@ -1,4 +1,4 @@
-package com.exemplo.meuprojeto.show.tipos;
+package com.exemplo.meuprojeto.problema2.types;
 
 public enum StatusFinanceiro {
     LUCRO,

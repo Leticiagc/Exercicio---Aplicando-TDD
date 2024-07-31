@@ -1,12 +1,12 @@
 package com.exemplo.meuprojeto;
 
 import org.junit.jupiter.api.Test;
-
-import com.exemplo.meuprojeto.show.entities.Ingresso;
-import com.exemplo.meuprojeto.show.entities.Lote;
-import com.exemplo.meuprojeto.show.entities.Relatorio;
-import com.exemplo.meuprojeto.show.entities.Show;
-import com.exemplo.meuprojeto.show.tipos.TipoIngresso;
+import com.exemplo.meuprojeto.problema2.entities.Ingresso;
+import com.exemplo.meuprojeto.problema2.entities.Lote;
+import com.exemplo.meuprojeto.problema2.entities.Relatorio;
+import com.exemplo.meuprojeto.problema2.entities.Show;
+import com.exemplo.meuprojeto.problema2.types.StatusFinanceiro;
+import com.exemplo.meuprojeto.problema2.types.TipoIngresso;
 
 import java.time.LocalDate;
 import java.util.Arrays;
@@ -26,7 +26,7 @@ class RelatorioDoShowTest {
         Ingresso ingressoMeia = new Ingresso(3L, TipoIngresso.MEIA_ENTRADA);
         ingressoMeia.setPreco(5.00);
 
-        Lote lote = new Lote(1L, Arrays.asList(ingressoVIP, ingressoNormal, ingressoMeia), 0.15, null);
+        Lote lote = new Lote(1L, Arrays.asList(ingressoVIP, ingressoNormal, ingressoMeia), 0.15, 10.00);
         lote.venderIngresso(1, TipoIngresso.VIP);
         lote.venderIngresso(1, TipoIngresso.NORMAL);
         lote.venderIngresso(1, TipoIngresso.MEIA_ENTRADA);
@@ -39,6 +39,6 @@ class RelatorioDoShowTest {
         assertEquals(1, relatorio.getQtdNormal());
         assertEquals(1, relatorio.getQtdMeiaEntrada());
         assertEquals(4925.00, relatorio.getReceitaLiquida(), 0.01);
-        assertEquals(TipoIngresso.MEIA_ENTRADA, relatorio.getStatusFinanceiro());
+        assertEquals(StatusFinanceiro.LUCRO, relatorio.getStatusFinanceiro());
     }
 }

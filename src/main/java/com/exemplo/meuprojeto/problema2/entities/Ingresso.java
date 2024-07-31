@@ -1,10 +1,11 @@
-package com.exemplo.meuprojeto.show.entities;
+package com.exemplo.meuprojeto.problema2.entities;
+
+import com.exemplo.meuprojeto.problema2.types.TipoIngresso;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import com.exemplo.meuprojeto.show.tipos.TipoIngresso;
 
 @Entity
 public class Ingresso {

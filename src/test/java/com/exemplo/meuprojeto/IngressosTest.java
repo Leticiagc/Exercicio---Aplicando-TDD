@@ -2,8 +2,8 @@ package com.exemplo.meuprojeto;
 
 import org.junit.jupiter.api.Test;
 
-import com.exemplo.meuprojeto.show.entities.Ingresso;
-import com.exemplo.meuprojeto.show.tipos.TipoIngresso;
+import com.exemplo.meuprojeto.problema2.entities.Ingresso;
+import com.exemplo.meuprojeto.problema2.types.TipoIngresso;
 
 import static org.junit.jupiter.api.Assertions.*;
 

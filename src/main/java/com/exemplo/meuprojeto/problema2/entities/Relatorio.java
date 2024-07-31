@@ -1,6 +1,6 @@
-package com.exemplo.meuprojeto.show.entities;
+package com.exemplo.meuprojeto.problema2.entities;
 
-import com.exemplo.meuprojeto.show.tipos.StatusFinanceiro;
+import com.exemplo.meuprojeto.problema2.types.StatusFinanceiro;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

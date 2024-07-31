@@ -2,9 +2,9 @@ package com.exemplo.meuprojeto;
 
 import org.junit.jupiter.api.Test;
 
-import com.exemplo.meuprojeto.show.entities.Ingresso;
-import com.exemplo.meuprojeto.show.entities.Lote;
-import com.exemplo.meuprojeto.show.tipos.TipoIngresso;
+import com.exemplo.meuprojeto.problema2.entities.Ingresso;
+import com.exemplo.meuprojeto.problema2.entities.Lote;
+import com.exemplo.meuprojeto.problema2.types.TipoIngresso;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -24,7 +24,7 @@ class LotesJava {
         assertEquals(15.0, lote.getPreco());
     }
 
-       @Test
+    @Test
     void testAplicarDesconto() {
         Ingresso ingresso1 = new Ingresso(50L, TipoIngresso.NORMAL);
         ingresso1.setPreco(10.0); 
