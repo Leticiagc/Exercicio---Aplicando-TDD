@@ -12,13 +12,13 @@ public class Relatorio {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;  
     private int qtdVIP;
     private int qtdMeia;
     private int qtdNormal;
     private double receitaLiquida;
     private StatusFinanceiro statusFinanceiro;
 
- 
     public Relatorio(int qtdVIP, int qtdMeia, int qtdNormal, double receitaLiquida, StatusFinanceiro statusFinanceiro) {
         this.qtdVIP = qtdVIP;
         this.qtdMeia = qtdMeia;
@@ -26,7 +26,6 @@ public class Relatorio {
         this.receitaLiquida = receitaLiquida;
         this.statusFinanceiro = statusFinanceiro;
     }
-
 
     public int getQtdVIP() { return qtdVIP; }
     public void setQtdVIP(int qtdVIP) { this.qtdVIP = qtdVIP; }

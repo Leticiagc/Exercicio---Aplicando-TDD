@@ -2,10 +2,12 @@ package com.exemplo.meuprojeto.problema2.entities;
 
 import com.exemplo.meuprojeto.problema2.types.StatusFinanceiro;
 import com.exemplo.meuprojeto.problema2.types.TipoIngresso;
+import jakarta.persistence.Entity;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
+@Entity
 public class Show {
     private LocalDate data;
     private String artista;
