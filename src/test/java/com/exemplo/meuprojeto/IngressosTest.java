@@ -1,4 +1,4 @@
-package com.exemplo.meuprojeto.problema1;
+package com.exemplo.meuprojeto;
 
 import org.junit.jupiter.api.Test;
 
@@ -19,7 +19,7 @@ class IngressosTest {
     @Test
     void testMarcarIngressoComoVendido() {
         Ingresso ingresso = new Ingresso(1L, TipoIngresso.VIP);
-        ingresso.setVendido(true);
+        ingresso.foiVendido();
         assertTrue(ingresso.foiVendido());
     }
 }

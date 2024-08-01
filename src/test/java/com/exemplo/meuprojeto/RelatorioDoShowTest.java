@@ -1,4 +1,4 @@
-package com.exemplo.meuprojeto.problema1;
+package com.exemplo.meuprojeto;
 
 import org.junit.jupiter.api.Test;
 import com.exemplo.meuprojeto.problema2.entities.Ingresso;
@@ -7,8 +7,10 @@ import com.exemplo.meuprojeto.problema2.entities.Relatorio;
 import com.exemplo.meuprojeto.problema2.entities.Show;
 import com.exemplo.meuprojeto.problema2.types.StatusFinanceiro;
 import com.exemplo.meuprojeto.problema2.types.TipoIngresso;
+
 import java.time.LocalDate;
 import java.util.Arrays;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class RelatorioDoShowTest {

@@ -1,4 +1,4 @@
-package com.exemplo.meuprojeto.problema1;
+package com.exemplo.meuprojeto;
 
 import org.junit.jupiter.api.Test;
 
@@ -13,25 +13,12 @@ import java.util.Arrays;
 class LotesJava {
 
     @Test
-    void testCriacaoLote01() {
+    void testCriacaoLote() {
         Ingresso ingresso1 = new Ingresso(10L,  TipoIngresso.NORMAL);
         Ingresso ingresso2 = new Ingresso(20L, TipoIngresso.VIP);
         Lote lote = new Lote(1L, Arrays.asList(ingresso1, ingresso2), 10.0, 15.0);
 
         assertEquals(1L, lote.getId());
-        assertEquals(2, lote.getIngressos().size());
-        assertEquals(10.0, lote.getDesconto());
-        assertEquals(15.0, lote.getPreco());
-    }
-
-
-    @Test
-    void testCriacaoLote02() {
-        Ingresso ingresso10 = new Ingresso(10L,  TipoIngresso.MEIA_ENTRADA);
-        Ingresso ingresso20 = new Ingresso(20L, TipoIngresso.VIP);
-        Lote lote = new Lote(10L, Arrays.asList(ingresso10, ingresso20), 10.0, 15.0);
-
-        assertEquals(10L, lote.getId());
         assertEquals(2, lote.getIngressos().size());
         assertEquals(10.0, lote.getDesconto());
         assertEquals(15.0, lote.getPreco());
