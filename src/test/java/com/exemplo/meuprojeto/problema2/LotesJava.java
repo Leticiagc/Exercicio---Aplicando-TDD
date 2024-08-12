@@ -1,14 +1,13 @@
-package com.exemplo.meuprojeto;
+package com.exemplo.meuprojeto.problema2;
 
+import java.util.Arrays;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 
 import com.exemplo.meuprojeto.problema2.entities.Ingresso;
 import com.exemplo.meuprojeto.problema2.entities.Lote;
 import com.exemplo.meuprojeto.problema2.types.TipoIngresso;
-
-import static org.junit.jupiter.api.Assertions.*;
-
-import java.util.Arrays;
 
 class LotesJava {
 

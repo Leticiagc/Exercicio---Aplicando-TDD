@@ -1,15 +1,15 @@
-package com.exemplo.meuprojeto.problema2;
+package com.exemplo.meuprojeto.problema1;
 
+import java.time.LocalDate;
+import java.util.Arrays;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 
 import com.exemplo.meuprojeto.problema1.entities.Conta;
 import com.exemplo.meuprojeto.problema1.entities.Fatura;
 import com.exemplo.meuprojeto.problema1.entities.ProcessadorDeContas;
-
-import static org.junit.jupiter.api.Assertions.*;
-
-import java.time.LocalDate;
-import java.util.Arrays;
 
 
 public class ProcessadorDeContasTest {

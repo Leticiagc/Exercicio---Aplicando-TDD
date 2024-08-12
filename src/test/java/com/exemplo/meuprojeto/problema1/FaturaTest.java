@@ -1,13 +1,13 @@
-package com.exemplo.meuprojeto.problema2;
+package com.exemplo.meuprojeto.problema1;
 
+import java.time.LocalDate;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
+
 import com.exemplo.meuprojeto.problema1.entities.Fatura;
 import com.exemplo.meuprojeto.problema1.entities.Pagamento;
 import com.exemplo.meuprojeto.problema1.types.TipoDoPagamento;
-
-import static org.junit.jupiter.api.Assertions.*;
-
-import java.time.LocalDate;
 
 public class FaturaTest {
 

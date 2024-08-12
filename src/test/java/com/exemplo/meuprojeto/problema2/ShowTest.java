@@ -1,5 +1,13 @@
-package com.exemplo.meuprojeto;
+package com.exemplo.meuprojeto.problema2;
 
+import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 
 import com.exemplo.meuprojeto.problema2.entities.Ingresso;
@@ -8,13 +16,6 @@ import com.exemplo.meuprojeto.problema2.entities.Relatorio;
 import com.exemplo.meuprojeto.problema2.entities.Show;
 import com.exemplo.meuprojeto.problema2.types.StatusFinanceiro;
 import com.exemplo.meuprojeto.problema2.types.TipoIngresso;
-
-import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class ShowTest {
 
