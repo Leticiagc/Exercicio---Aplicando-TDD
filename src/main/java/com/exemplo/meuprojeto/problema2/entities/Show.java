@@ -108,6 +108,6 @@ public class Show {
             statusFinanceiro = StatusFinanceiro.PREJUÍZO;
         }
 
-        return new Relatorio(qtdVIP, qtdNormal, qtdMeiaEntrada, receitaLiquida, statusFinanceiro);
+        return new Relatorio(qtdVIP, qtdMeiaEntrada, qtdNormal, receitaLiquida, statusFinanceiro);
     }
 }

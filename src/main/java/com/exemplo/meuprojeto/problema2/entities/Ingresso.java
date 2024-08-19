@@ -1,5 +1,6 @@
 package com.exemplo.meuprojeto.problema2.entities;
 
+
 import com.exemplo.meuprojeto.problema2.types.TipoIngresso;
 
 import jakarta.persistence.Entity;
@@ -20,10 +21,13 @@ public class Ingresso {
 
     private boolean foiVendido;
 
-  
-    public Ingresso(Long id, TipoIngresso tipoIngresso) {
+    private TipoIngresso tipo;
+
+
+    public Ingresso(Long id, TipoIngresso tipo, Double preco) {
         this.id = id;
-        this.tipoIngresso = tipoIngresso;
+        this.tipo = tipo;
+        this.preco = preco;
     }
 
     public Double getPreco() {

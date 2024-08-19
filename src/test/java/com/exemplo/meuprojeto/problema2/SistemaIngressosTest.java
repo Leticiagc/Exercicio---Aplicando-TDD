@@ -1,138 +1,446 @@
 package com.exemplo.meuprojeto.problema2;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import java.time.LocalDate;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-class SistemaIngressosTest {
+import com.exemplo.meuprojeto.problema2.entities.Ingresso;
+import com.exemplo.meuprojeto.problema2.entities.Lote;
+import com.exemplo.meuprojeto.problema2.entities.Relatorio;
+import com.exemplo.meuprojeto.problema2.entities.Show;
+import com.exemplo.meuprojeto.problema2.types.StatusFinanceiro;
+import com.exemplo.meuprojeto.problema2.types.TipoIngresso;
+
+public class SistemaIngressosTest {
 
     @Test
-    void testPercentualIngressosVIPNoLimiteInferior() {
-        int totalIngressos = 1000;
-        int percentualVIP = 20;
-        int quantidadeVIP = (totalIngressos * percentualVIP) / 100;
-        assertEquals(200, quantidadeVIP, "Erro: Percentual de ingressos VIP no limite inferior.");
+    public void testCT01() {
+
+        Lote lote = new Lote(1L, Arrays.asList(new Ingresso(1L, TipoIngresso.VIP, 1000.0)), 20.0, 100.0);
+        lote.aplicarDesconto();
+
+        Assertions.assertEquals(160.0, lote.getIngressos().get(0).getPreco());
     }
 
     @Test
-    void testPercentualIngressosVIPNoLimiteSuperior() {
-        int totalIngressos = 1000;
-        int percentualVIP = 30;
-        int quantidadeVIP = (totalIngressos * percentualVIP) / 100;
-        assertEquals(300, quantidadeVIP, "Erro: Percentual de ingressos VIP no limite superior.");
+    public void testCT02() {
+
+        Ingresso ingresso = new Ingresso(1L, TipoIngresso.MEIA_ENTRADA, 100.0);
+        Lote lote = new Lote(1L, Arrays.asList(ingresso), 10.0, 100.0);
+        lote.aplicarDesconto();
+
+        Assertions.assertEquals(45.0, lote.getIngressos().get(0).getPreco());
     }
 
     @Test
-    void testPercentualIngressosVIPAbaixoDoLimite() {
-        int totalIngressos = 1000;
-        int percentualVIP = 19;
-        int quantidadeVIP = (totalIngressos * percentualVIP) / 100;
-        assertTrue(quantidadeVIP < 200, "Erro: Percentual de ingressos VIP abaixo do limite inferior.");
+    public void testCT03() {
+        Lote lote = new Lote(1L, Arrays.asList(new Ingresso(1L, TipoIngresso.VIP, 200.0)), 19.0, 100.0);
+
+        Assertions.assertThrows(IllegalArgumentException.class, lote::aplicarDesconto);
     }
 
     @Test
-    void testPercentualIngressosVIPAcimaDoLimite() {
-        int totalIngressos = 1000;
-        int percentualVIP = 31;
-        assertThrows(IllegalArgumentException.class, () -> {
-            int quantidadeVIP = (totalIngressos * percentualVIP) / 100;
-            if (quantidadeVIP > 300) {
-                throw new IllegalArgumentException("Erro: Percentual de ingressos VIP acima do limite superior.");
-            }
-        });
+    public void testCT04() {
+        // CT04: Erro esperado por quantidade de desconto acima de 30% para ingressos
+        // VIP
+        Lote lote = new Lote(1L, Arrays.asList(new Ingresso(1L, TipoIngresso.VIP, 200.0)), 31.0, 100.0);
+
+        Assertions.assertThrows(IllegalArgumentException.class, lote::aplicarDesconto);
     }
 
     @Test
-    void testPercentualIngressosMEIAENTRADANoLimiteInferior() {
-        int totalIngressos = 1000;
-        int percentualMEIA_ENTRADA = 10;
-        int quantidadeMEIA_ENTRADA = (totalIngressos * percentualMEIA_ENTRADA) / 100;
-        assertEquals(100, quantidadeMEIA_ENTRADA, "Erro: Percentual de ingressos MEIA_ENTRADA no limite inferior.");
+    public void testCT05() {
+
+        Ingresso ingresso = new Ingresso(1L, TipoIngresso.VIP, 200.0);
+        Lote lote = new Lote(1L, Arrays.asList(ingresso), 25.0, 100.0);
+        lote.aplicarDesconto();
+
+        Assertions.assertEquals(150.0, lote.getIngressos().get(0).getPreco());
     }
 
     @Test
-    void testPercentualIngressosMEIAENTRADABaixoDoLimite() {
-        int totalIngressos = 1000;
-        int percentualMEIA_ENTRADA = 9;
-        int quantidadeMEIA_ENTRADA = (totalIngressos * percentualMEIA_ENTRADA) / 100;
-        assertTrue(quantidadeMEIA_ENTRADA < 100, "Erro: Percentual de ingressos MEIA_ENTRADA abaixo do limite.");
+    public void testCT06() {
+        Lote lote = new Lote(1L, Arrays.asList(new Ingresso(1L, TipoIngresso.MEIA_ENTRADA, 50.0)), 9.0, 100.0); // Desconto
+                                                                                                                // de 9%
+        Assertions.assertThrows(IllegalArgumentException.class, lote::aplicarDesconto);
     }
 
     @Test
-    void testPercentualIngressosMEIAENTRADAAcimaDoLimite() {
-        int totalIngressos = 1000;
-        int percentualMEIA_ENTRADA = 11;
-        int quantidadeMEIA_ENTRADA = (totalIngressos * percentualMEIA_ENTRADA) / 100;
-        assertTrue(quantidadeMEIA_ENTRADA > 100, "Erro: Percentual de ingressos MEIA_ENTRADA acima do limite.");
+    public void testCT07() {
+        // CT07: Relatório do show
+        Lote loteVIP = new Lote(1L, Arrays.asList(new Ingresso(1L, TipoIngresso.VIP, 100.0)), 25.0, 100.0);
+        Lote loteMeia = new Lote(2L, Arrays.asList(new Ingresso(2L, TipoIngresso.MEIA_ENTRADA, 50.0)), 10.0, 50.0);
+
+        loteVIP.venderIngresso(500, TipoIngresso.VIP);
+        loteMeia.venderIngresso(100, TipoIngresso.MEIA_ENTRADA);
+        loteVIP.aplicarDesconto();
+        loteMeia.aplicarDesconto();
+
+        Map<Long, Lote> lotes = new HashMap<>();
+        lotes.put(loteVIP.getId(), loteVIP);
+        lotes.put(loteMeia.getId(), loteMeia);
+
+        Show show = new Show(LocalDate.now(), "Artista", 3000.0, 300.0, lotes, false);
+        Relatorio relatorio = show.gerarRelatorio();
+
+        double receitaBruta = 500 * (100.0 * 2 * (1 - 25.0 / 100)) + 100 * (50.0 * 0.5 * (1 - 10.0 / 100));
+        double despesasTotais = 3000.0 + 300.0;
+
+        double receitaLiquida = receitaBruta - despesasTotais;
+
+        Assertions.assertEquals(receitaLiquida, relatorio.getReceitaLiquida(), 0.01);
+        Assertions.assertEquals(StatusFinanceiro.LUCRO, relatorio.getStatusFinanceiro());
     }
 
     @Test
-    void testDistribuicaoCorretaIngressos() {
-        int totalIngressos = 1000;
-        int quantidadeVIP = (totalIngressos * 20) / 100;
-        int quantidadeMEIA_ENTRADA = (totalIngressos * 10) / 100;
-        int quantidadeNORMAL = totalIngressos - (quantidadeVIP + quantidadeMEIA_ENTRADA);
-        assertEquals(200, quantidadeVIP, "Erro na distribuição de ingressos VIP.");
-        assertEquals(100, quantidadeMEIA_ENTRADA, "Erro na distribuição de ingressos MEIA_ENTRADA.");
-        assertEquals(700, quantidadeNORMAL, "Erro na distribuição de ingressos NORMAL.");
+    public void testCT08() {
+        // CT08: Receita de R$3300,00, custos de R$3300,00, data não especial, estável
+
+        // Configuração dos lotes com ingressos e preços
+        Lote loteVIP = new Lote(1L, Arrays.asList(new Ingresso(1L, TipoIngresso.VIP, 100.0)), 25.0);
+        Lote loteMeia = new Lote(2L, Arrays.asList(new Ingresso(2L, TipoIngresso.MEIA_ENTRADA, 50.0)), 10.0);
+
+        Map<Long, Lote> lotes = new HashMap<>();
+        lotes.put(loteVIP.getId(), loteVIP);
+        lotes.put(loteMeia.getId(), loteMeia);
+
+        // Configuração do show
+        Show show = new Show(LocalDate.now(), "Artista", 3000.0, 300.0, lotes, false);
+
+        // Aplicar descontos
+        loteVIP.aplicarDesconto();
+        loteMeia.aplicarDesconto();
+
+        // Gerar e validar o relatório
+        Relatorio relatorio = show.gerarRelatorio();
+
+        double receitaBruta = (100 * (100.0 * 2 * (1 - 0.15))) + (50 * (50.0 * 0.5 * (1 - 0.15)));
+        double despesasTotais = 3000.0 + 300.0;
+
+        Assertions.assertEquals(receitaBruta - despesasTotais, relatorio.getReceitaLiquida(), 0.01);
+        Assertions.assertEquals(StatusFinanceiro.ESTAVEL, relatorio.getStatusFinanceiro());
     }
 
     @Test
-    void testDescontoAplicadoNoLimiteSuperiorVIP() {
-        double precoVIP = 200;
-        double desconto = 25;
-        double precoFinalVIP = precoVIP - (precoVIP * desconto / 100);
-        assertEquals(150, precoFinalVIP, "Erro: Desconto aplicado no limite superior para VIP.");
+    public void testCT09() {
+
+        Lote loteVIP = new Lote(1L, Arrays.asList(new Ingresso(1L, TipoIngresso.VIP, 100.0)), 25.0, 100.0);
+        Lote loteMeia = new Lote(2L, Arrays.asList(new Ingresso(2L, TipoIngresso.MEIA_ENTRADA, 50.0)), 10.0, 50.0);
+
+        Map<Long, Lote> lotes = new HashMap<>();
+        lotes.put(loteVIP.getId(), loteVIP);
+        lotes.put(loteMeia.getId(), loteMeia);
+
+        Show show = new Show(LocalDate.now(), "Artista", 3000.0, 300.0, lotes, false);
+
+        loteVIP.aplicarDesconto();
+        loteMeia.aplicarDesconto();
+
+        Relatorio relatorio = show.gerarRelatorio();
+
+        double receitaBruta = (100 * (100.0 * (1 - 0.15))) + (50 * (50.0 * (1 - 0.15)));
+        double despesasTotais = 3000.0 + 300.0;
+
+        Assertions.assertEquals(receitaBruta - despesasTotais, relatorio.getReceitaLiquida(), 0.01);
+        Assertions.assertEquals(StatusFinanceiro.PREJUÍZO, relatorio.getStatusFinanceiro());
     }
 
     @Test
-    void testDescontoAplicadoNoLimiteSuperiorNORMAL() {
-        double precoNormal = 100;
-        double desconto = 25;
-        double precoFinalNormal = precoNormal - (precoNormal * desconto / 100);
-        assertEquals(75, precoFinalNormal, "Erro: Desconto aplicado no limite superior para NORMAL.");
+    public void testCT10() {
+
+
+        Lote loteVIP = new Lote(1L, Arrays.asList(new Ingresso(1L, TipoIngresso.VIP)), 25.0, 100.0);
+        Lote loteMeia = new Lote(2L, Arrays.asList(new Ingresso(2L, TipoIngresso.MEIA_ENTRADA)), 10.0, 50.0);
+
+        Map<Long, Lote> lotes = new HashMap<>();
+        lotes.put(loteVIP.getId(), loteVIP);
+        lotes.put(loteMeia.getId(), loteMeia);
+
+        Show show = new Show(LocalDate.now(), "Artista", 3000.0, 795.0, lotes, false);
+        loteVIP.aplicarDesconto();
+        loteMeia.aplicarDesconto();
+
+        Relatorio relatorio = show.gerarRelatorio();
+
+        // Cálculo Esperado
+        double receitaBruta = (100 * (25.0 * 2 * (1 - 0.15))) + (50 * (10.0 * 0.5 * (1 - 0.15)));
+        double despesasTotais = 3000.0 + 795.0;
+
+        Assertions.assertEquals(receitaBruta - despesasTotais, relatorio.getReceitaLiquida(), 0.01);
+        Assertions.assertEquals(StatusFinanceiro.LUCRO, relatorio.getStatusFinanceiro());
+    }
+
+    @Test
+    public void testCT11() {
+        // CT11: Receita de R$2500,00, custos de R$300.00, data não especial, lucro
+
+        Lote loteVIP = new Lote(1L, Arrays.asList(new Ingresso(1L, TipoIngresso.VIP)), 25.0, 100.0);
+        Lote loteMeia = new Lote(2L, Arrays.asList(new Ingresso(2L, TipoIngresso.MEIA_ENTRADA)), 10.0, 50.0);
+
+        Map<Long, Lote> lotes = new HashMap<>();
+        lotes.put(loteVIP.getId(), loteVIP);
+        lotes.put(loteMeia.getId(), loteMeia);
+
+        Show show = new Show(LocalDate.now(), "Artista", 3000.0, 300.0, lotes, false);
+        loteVIP.aplicarDesconto();
+        loteMeia.aplicarDesconto();
+
+        Relatorio relatorio = show.gerarRelatorio();
+
+        // Cálculo Esperado
+        double receitaBruta = (100 * (25.0 * 2 * (1 - 0.15))) + (50 * (10.0 * 0.5 * (1 - 0.15)));
+        double despesasTotais = 3000.0 + 300.0;
+
+        Assertions.assertEquals(receitaBruta - despesasTotais, relatorio.getReceitaLiquida(), 0.01);
+        Assertions.assertEquals(StatusFinanceiro.LUCRO, relatorio.getStatusFinanceiro());
     }
 
 
     @Test
-    void testReceitaLiquidaComShowEmDataNormal() {
-        double precoIngressosVendidos = 130000;
-        double despesasInfraestrutura = 50000;
-        double cache = 30000;
-        double receitaLiquida = precoIngressosVendidos - despesasInfraestrutura - cache;
-        assertEquals(50000, receitaLiquida, "Erro: Receita líquida com show em data normal.");
-        assertEquals("LUCRO", receitaLiquida > 0 ? "LUCRO" : receitaLiquida == 0 ? "ESTÁVEL" : "PREJUÍZO", "Status financeiro incorreto.");
+    public void testDecisionTable1() {
+
+        Lote loteVIP = new Lote(1L, Arrays.asList(new Ingresso(1L, TipoIngresso.VIP, 50.0)), 500, 25.0);
+        Map<Long, Lote> lotes = new HashMap<>();
+        lotes.put(loteVIP.getId(), loteVIP);
+
+        Show show = new Show(LocalDate.now(), "Artista", 3000.0, 500.0, lotes, true);
+        loteVIP.aplicarDesconto();
+
+        Relatorio relatorio = show.gerarRelatorio();
+
+        double receitaBruta = 500 * (50.0 * (1 - 0.15));
+        double despesasTotais = 3000.0 + 500.0;
+
+        Assertions.assertEquals(receitaBruta - despesasTotais, relatorio.getReceitaLiquida(), 0.01);
+        Assertions.assertEquals(StatusFinanceiro.PREJUÍZO, relatorio.getStatusFinanceiro());
     }
 
     @Test
-    void testReceitaLiquidaComShowEmDataEspecial() {
-        double precoIngressosVendidos = 130000;
-        double despesasInfraestrutura = 50000 * 1.15; // adicional de 15%
-        double cache = 30000;
-        double receitaLiquida = precoIngressosVendidos - despesasInfraestrutura - cache;
-        assertEquals(42500, receitaLiquida, "Erro: Receita líquida com show em data especial.");
-        assertEquals("LUCRO", receitaLiquida > 0 ? "LUCRO" : receitaLiquida == 0 ? "ESTÁVEL" : "PREJUÍZO", "Status financeiro incorreto.");
+    public void testDecisionTable2() {
+
+
+        Lote loteMeia = new Lote(1L, Arrays.asList(new Ingresso(1L, TipoIngresso.MEIA_ENTRADA, 25.0)), 500, 25.0);
+        Map<Long, Lote> lotes = new HashMap<>();
+        lotes.put(loteMeia.getId(), loteMeia);
+
+        Show show = new Show(LocalDate.now(), "Artista", 3000.0, 500.0, lotes, true);
+        loteMeia.aplicarDesconto();
+
+        Relatorio relatorio = show.gerarRelatorio();
+
+        double receitaBruta = 500 * (25.0 * (1 - 0.25));
+        double despesasTotais = 3000.0 + 500.0;
+
+        Assertions.assertEquals(receitaBruta - despesasTotais, relatorio.getReceitaLiquida(), 0.01);
+        Assertions.assertEquals(StatusFinanceiro.PREJUÍZO, relatorio.getStatusFinanceiro());
     }
 
     @Test
-    void testReceitaLiquidaResultandoEmPrejuizo() {
-        double precoIngressosVendidos = 80000;
-        double despesasInfraestrutura = 50000;
-        double cache = 40000;
-        double receitaLiquida = precoIngressosVendidos - despesasInfraestrutura - cache;
-        assertEquals(-10000, receitaLiquida, "Erro: Receita líquida resultando em prejuízo.");
-        assertEquals("PREJUÍZO", receitaLiquida < 0 ? "PREJUÍZO" : receitaLiquida == 0 ? "ESTÁVEL" : "LUCRO", "Status financeiro incorreto.");
+    public void testDecisionTable3() {
+      
+
+        Lote loteNormal = new Lote(1L, Arrays.asList(new Ingresso(1L, TipoIngresso.NORMAL, 25.0)), 500, 25.0);
+        Map<Long, Lote> lotes = new HashMap<>();
+        lotes.put(loteNormal.getId(), loteNormal);
+
+        Show show = new Show(LocalDate.now(), "Artista", 3000.0, 500.0, lotes, true);
+
+        Relatorio relatorio = show.gerarRelatorio();
+
+        double receitaBruta = 500 * 25.0;
+        double despesasTotais = 3000.0 + 500.0;
+
+        Assertions.assertEquals(receitaBruta - despesasTotais, relatorio.getReceitaLiquida(), 0.01);
+        Assertions.assertEquals(StatusFinanceiro.PREJUÍZO, relatorio.getStatusFinanceiro());
     }
 
     @Test
-    void testReceitaLiquidaEstavel() {
-        double precoIngressosVendidos = 80000;
-        double despesasInfraestrutura = 40000;
-        double cache = 40000;
-        double receitaLiquida = precoIngressosVendidos - despesasInfraestrutura - cache;
-        assertEquals(0, receitaLiquida, "Erro: Receita líquida estável.");
-        assertEquals("ESTÁVEL", receitaLiquida == 0 ? "ESTÁVEL" : receitaLiquida > 0 ? "LUCRO" : "PREJUÍZO", "Status financeiro incorreto.");
+    public void testDecisionTable4() {
+  
+
+        Lote loteVIP = new Lote(1L, Arrays.asList(new Ingresso(1L, TipoIngresso.VIP, 50.0)), 500, 25.0);
+        Map<Long, Lote> lotes = new HashMap<>();
+        lotes.put(loteVIP.getId(), loteVIP);
+
+        Show show = new Show(LocalDate.now(), "Artista", 3000.0, 300.0, lotes, false);
+        loteVIP.aplicarDesconto();
+
+        Relatorio relatorio = show.gerarRelatorio();
+
+        double receitaBruta = 500 * (50.0 * (1 - 0.15));
+        double despesasTotais = 3000.0 + 300.0;
+
+        Assertions.assertEquals(receitaBruta - despesasTotais, relatorio.getReceitaLiquida(), 0.01);
+        Assertions.assertEquals(StatusFinanceiro.PREJUÍZO, relatorio.getStatusFinanceiro());
     }
+
+    @Test
+    public void testDecisionTable5() {
+    
+        Lote loteMeia = new Lote(1L, Arrays.asList(new Ingresso(1L, TipoIngresso.MEIA_ENTRADA, 25.0)), 500, 25.0);
+        Map<Long, Lote> lotes = new HashMap<>();
+        lotes.put(loteMeia.getId(), loteMeia);
+
+        Show show = new Show(LocalDate.now(), "Artista", 3000.0, 300.0, lotes, false);
+        loteMeia.aplicarDesconto();
+
+        Relatorio relatorio = show.gerarRelatorio();
+
+        double receitaBruta = 500 * (25.0 * (1 - 0.25));
+        double despesasTotais = 3000.0 + 300.0;
+
+        Assertions.assertEquals(receitaBruta - despesasTotais, relatorio.getReceitaLiquida(), 0.01);
+        Assertions.assertEquals(StatusFinanceiro.PREJUÍZO, relatorio.getStatusFinanceiro());
+    }
+
+    @Test
+    public void testDecisionTable6() {
+
+
+        Lote loteNormal = new Lote(1L, Arrays.asList(new Ingresso(1L, TipoIngresso.NORMAL, 25.0)), 500, 25.0);
+        Map<Long, Lote> lotes = new HashMap<>();
+        lotes.put(loteNormal.getId(), loteNormal);
+
+        Show show = new Show(LocalDate.now(), "Artista", 3000.0, 300.0, lotes, false);
+    
+
+        Relatorio relatorio = show.gerarRelatorio();
+
+        double receitaBruta = 500 * 25.0;
+        double despesasTotais = 3000.0 + 300.0;
+
+        Assertions.assertEquals(receitaBruta - despesasTotais, relatorio.getReceitaLiquida(), 0.01);
+        Assertions.assertEquals(StatusFinanceiro.PREJUÍZO, relatorio.getStatusFinanceiro());
+    }
+
+    @Test
+    public void testDecisionTable7() {
+        // C1 = Verdadeiro, C2 = Nenhum, C3 = VIP, C4 = 500, C5 = custos e cachê
+        // Esperado: Sem desconto e gerar relatório
+
+        Lote loteVIP = new Lote(1L, Arrays.asList(new Ingresso(1L, TipoIngresso.VIP, 50.0)), 500, 25.0);
+        Map<Long, Lote> lotes = new HashMap<>();
+        lotes.put(loteVIP.getId(), loteVIP);
+
+        Show show = new Show(LocalDate.now(), "Artista", 3000.0, 500.0, lotes, true);
+        // Sem desconto aplicado
+
+        Relatorio relatorio = show.gerarRelatorio();
+
+        double receitaBruta = 500 * 50.0;
+        double despesasTotais = 3000.0 + 500.0;
+
+        Assertions.assertEquals(receitaBruta - despesasTotais, relatorio.getReceitaLiquida(), 0.01);
+        Assertions.assertEquals(StatusFinanceiro.PREJUÍZO, relatorio.getStatusFinanceiro());
+    }
+
+    @Test
+    public void testDecisionTable8() {
+        // C1 = Falso, C2 = Desconto de 15%, C3 = MEIA_ENTRADA, C4 = 500, C5 = custos e cachê
+        // Esperado: Aplicar desconto de 15% e gerar relatório
+
+        Lote loteMeia = new Lote(1L, Arrays.asList(new Ingresso(1L, TipoIngresso.MEIA_ENTRADA, 25.0)), 500, 25.0);
+        Map<Long, Lote> lotes = new HashMap<>();
+        lotes.put(loteMeia.getId(), loteMeia);
+
+        Show show = new Show(LocalDate.now(), "Artista", 3000.0, 300.0, lotes, false);
+        loteMeia.aplicarDesconto();
+
+        Relatorio relatorio = show.gerarRelatorio();
+
+        double receitaBruta = 500 * (25.0 * (1 - 0.15));
+        double despesasTotais = 3000.0 + 300.0;
+
+        Assertions.assertEquals(receitaBruta - despesasTotais, relatorio.getReceitaLiquida(), 0.01);
+        Assertions.assertEquals(StatusFinanceiro.PREJUÍZO, relatorio.getStatusFinanceiro());
+    }
+
+    @Test
+    public void testDecisionTable9() {
+        // C1 = Falso, C2 = Desconto de 25%, C3 = NORMAL, C4 = 500, C5 = custos e cachê
+        // Esperado: Aplicar desconto de 25% e gerar relatório
+
+        Lote loteNormal = new Lote(1L, Arrays.asList(new Ingresso(1L, TipoIngresso.NORMAL, 25.0)), 500, 25.0);
+        Map<Long, Lote> lotes = new HashMap<>();
+        lotes.put(loteNormal.getId(), loteNormal);
+
+        Show show = new Show(LocalDate.now(), "Artista", 3000.0, 300.0, lotes, false);
+        loteNormal.aplicarDesconto();
+
+        Relatorio relatorio = show.gerarRelatorio();
+
+        double receitaBruta = 500 * (25.0 * (1 - 0.25));
+        double despesasTotais = 3000.0 + 300.0;
+
+        Assertions.assertEquals(receitaBruta - despesasTotais, relatorio.getReceitaLiquida(), 0.01);
+        Assertions.assertEquals(StatusFinanceiro.PREJUÍZO, relatorio.getStatusFinanceiro());
+    }
+
+    @Test
+    public void testDecisionTable10() {
+        // C1 = Falso, C2 = Nenhum, C3 = VIP, C4 = 500, C5 = custos e cachê
+        // Esperado: Sem desconto e gerar relatório
+
+        Lote loteVIP = new Lote(1L, Arrays.asList(new Ingresso(1L, TipoIngresso.VIP, 50.0)), 500, 25.0);
+        Map<Long, Lote> lotes = new HashMap<>();
+        lotes.put(loteVIP.getId(), loteVIP);
+
+        Show show = new Show(LocalDate.now(), "Artista", 3000.0, 300.0, lotes, false);
+        // Sem desconto aplicado
+
+        Relatorio relatorio = show.gerarRelatorio();
+
+        double receitaBruta = 500 * 50.0;
+        double despesasTotais = 3000.0 + 300.0;
+
+        Assertions.assertEquals(receitaBruta - despesasTotais, relatorio.getReceitaLiquida(), 0.01);
+        Assertions.assertEquals(StatusFinanceiro.PREJUÍZO, relatorio.getStatusFinanceiro());
+    }
+
+    @Test
+    public void testDecisionTable11() {
+        // C1 = Verdadeiro, C2 = Desconto de 15%, C3 = MEIA_ENTRADA, C4 = 500, C5 = custos e cachê
+        // Esperado: Aplicar desconto de 15% e gerar relatório
+
+        Lote loteMeia = new Lote(1L, Arrays.asList(new Ingresso(1L, TipoIngresso.MEIA_ENTRADA, 25.0)), 500, 25.0);
+        Map<Long, Lote> lotes = new HashMap<>();
+        lotes.put(loteMeia.getId(), loteMeia);
+
+        Show show = new Show(LocalDate.now(), "Artista", 3000.0, 500.0, lotes, true);
+        loteMeia.aplicarDesconto();
+
+        Relatorio relatorio = show.gerarRelatorio();
+
+        double receitaBruta = 500 * (25.0 * (1 - 0.15));
+        double despesasTotais = 3000.0 + 500.0;
+
+        Assertions.assertEquals(receitaBruta - despesasTotais, relatorio.getReceitaLiquida(), 0.01);
+        Assertions.assertEquals(StatusFinanceiro.PREJUÍZO, relatorio.getStatusFinanceiro());
+    }
+
+    @Test
+    public void testDecisionTable12() {
+        // C1 = Verdadeiro, C2 = Desconto de 25%, C3 = NORMAL, C4 = 500, C5 = custos e cachê
+        // Esperado: Aplicar desconto de 25% e gerar relatório
+
+        Lote loteNormal = new Lote(1L, Arrays.asList(new Ingresso(1L, TipoIngresso.NORMAL, 25.0)), 500, 25.0);
+        Map<Long, Lote> lotes = new HashMap<>();
+        lotes.put(loteNormal.getId(), loteNormal);
+
+        Show show = new Show(LocalDate.now(), "Artista", 3000.0, 500.0, lotes, true);
+        loteNormal.aplicarDesconto();
+
+        Relatorio relatorio = show.gerarRelatorio();
+
+        double receitaBruta = 500 * (25.0 * (1 - 0.25));
+        double despesasTotais = 3000.0 + 500.0;
+
+        Assertions.assertEquals(receitaBruta - despesasTotais, relatorio.getReceitaLiquida(), 0.01);
+        Assertions.assertEquals(StatusFinanceiro.PREJUÍZO, relatorio.getStatusFinanceiro());
+    }
+
 }

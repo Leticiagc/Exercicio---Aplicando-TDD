@@ -1,14 +1,15 @@
 package com.exemplo.meuprojeto.problema2.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import com.exemplo.meuprojeto.problema2.types.TipoIngresso;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
 @Entity
 public class Lote {
@@ -62,10 +63,28 @@ public class Lote {
     }
 
     public void aplicarDesconto() {
-        for (Ingresso ingresso : ingressos) {
-            if (ingresso.getTipo() == TipoIngresso.NORMAL || ingresso.getTipo() == TipoIngresso.VIP) {
-                ingresso.setPreco(ingresso.getPreco() * (1 - descontoIngresso / 100));
+        if (descontoIngresso < 10.0 && ingressos.stream().anyMatch(i -> i.getTipo() == TipoIngresso.MEIA_ENTRADA)) {
+            throw new IllegalArgumentException("Desconto para ingressos MEIA_ENTRADA deve ser pelo menos 10%");
+        }
+
+        if (descontoIngresso < 20.0 || descontoIngresso > 30.0) {
+            if (ingressos.stream().anyMatch(i -> i.getTipo() == TipoIngresso.VIP)) {
+                throw new IllegalArgumentException("Desconto para ingressos VIP deve estar entre 20% e 30%");
             }
+        }
+
+        for (Ingresso ingresso : ingressos) {
+            if (ingresso.getTipo() == TipoIngresso.VIP) {
+                ingresso.setPreco(preco * 2); // VIP custa o dobro do Normal
+            } else if (ingresso.getTipo() == TipoIngresso.MEIA_ENTRADA) {
+                ingresso.setPreco(preco * 0.5); // MEIA_ENTRADA custa a metade do Normal
+            } else if (ingresso.getTipo() == TipoIngresso.NORMAL) {
+                ingresso.setPreco(preco); // Normal mantém o preço base
+            }
+        }
+
+        for (Ingresso ingresso : ingressos) {
+            ingresso.setPreco(ingresso.getPreco() * (1 - descontoIngresso / 100));
         }
     }
 
