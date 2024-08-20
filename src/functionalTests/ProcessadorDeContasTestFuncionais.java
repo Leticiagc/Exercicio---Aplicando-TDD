@@ -10,7 +10,7 @@ import com.exemplo.meuprojeto.problema1.entities.Fatura;
 import com.exemplo.meuprojeto.problema1.entities.Pagamento;
 import com.exemplo.meuprojeto.problema1.types.TipoDoPagamento;
 
-public class Problema1Test {
+public class ProcessadorDeContasTestFuncionais {
 
 
     @Test

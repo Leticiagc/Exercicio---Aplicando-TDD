@@ -23,6 +23,12 @@ public class Ingresso {
 
     private TipoIngresso tipo;
 
+    public Ingresso(Long id, TipoIngresso tipo) {
+        this.id = id;
+        this.tipo = tipo;
+
+    }
+
 
     public Ingresso(Long id, TipoIngresso tipo, Double preco) {
         this.id = id;
