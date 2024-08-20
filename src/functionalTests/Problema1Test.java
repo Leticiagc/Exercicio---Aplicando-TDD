@@ -12,7 +12,7 @@ import com.exemplo.meuprojeto.problema1.types.TipoDoPagamento;
 
 public class Problema1Test {
 
-
+    // Tecnica de particoes de equivalencia
     @Test
     public void testC1() {
         Fatura fatura = new Fatura(LocalDate.of(2023, 2, 20), 1500.00, "Cliente1");
