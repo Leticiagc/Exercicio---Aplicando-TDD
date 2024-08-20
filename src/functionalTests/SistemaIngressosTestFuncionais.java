@@ -303,8 +303,7 @@ public class SistemaIngressosTestFuncionais {
 
     @Test
     public void testDecisionTable7() {
-        // C1 = Verdadeiro, C2 = Nenhum, C3 = VIP, C4 = 500, C5 = custos e cachê
-
+       
         Lote loteVIP = new Lote(1L, Arrays.asList(new Ingresso(1L, TipoIngresso.VIP, 50.0)), 500, 25.0);
         Map<Long, Lote> lotes = new HashMap<>();
         lotes.put(loteVIP.getId(), loteVIP);
@@ -322,7 +321,6 @@ public class SistemaIngressosTestFuncionais {
 
     @Test
     public void testDecisionTable8() {
-
         Lote loteMeia = new Lote(1L, Arrays.asList(new Ingresso(1L, TipoIngresso.MEIA_ENTRADA, 25.0)), 500, 25.0);
         Map<Long, Lote> lotes = new HashMap<>();
         lotes.put(loteMeia.getId(), loteMeia);
@@ -341,7 +339,6 @@ public class SistemaIngressosTestFuncionais {
 
     @Test
     public void testDecisionTable9() {
-
         Lote loteNormal = new Lote(1L, Arrays.asList(new Ingresso(1L, TipoIngresso.NORMAL, 25.0)), 500, 25.0);
         Map<Long, Lote> lotes = new HashMap<>();
         lotes.put(loteNormal.getId(), loteNormal);
@@ -360,7 +357,6 @@ public class SistemaIngressosTestFuncionais {
 
     @Test
     public void testDecisionTable10() {
-   
         Lote loteVIP = new Lote(1L, Arrays.asList(new Ingresso(1L, TipoIngresso.VIP, 50.0)), 500, 25.0);
         Map<Long, Lote> lotes = new HashMap<>();
         lotes.put(loteVIP.getId(), loteVIP);
@@ -378,8 +374,6 @@ public class SistemaIngressosTestFuncionais {
 
     @Test
     public void testDecisionTable11() {
-
-
         Lote loteMeia = new Lote(1L, Arrays.asList(new Ingresso(1L, TipoIngresso.MEIA_ENTRADA, 25.0)), 500, 25.0);
         Map<Long, Lote> lotes = new HashMap<>();
         lotes.put(loteMeia.getId(), loteMeia);
@@ -398,7 +392,6 @@ public class SistemaIngressosTestFuncionais {
 
     @Test
     public void testDecisionTable12() {
- 
         Lote loteNormal = new Lote(1L, Arrays.asList(new Ingresso(1L, TipoIngresso.NORMAL, 25.0)), 500, 25.0);
         Map<Long, Lote> lotes = new HashMap<>();
         lotes.put(loteNormal.getId(), loteNormal);
