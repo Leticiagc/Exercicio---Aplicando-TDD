@@ -27,7 +27,7 @@ public class Problema1Test {
 
         fatura.addPayment(pagamento);
 
-        assertEquals("ERRO", fatura.getStatus());
+        assertEquals("PENDENTE", fatura.getStatus());
     }
 
     @Test
@@ -37,7 +37,7 @@ public class Problema1Test {
 
         fatura.addPayment(pagamento);
 
-        assertEquals("ERRO", fatura.getStatus()); 
+        assertEquals("PENDENTE", fatura.getStatus()); 
     }
 
     @Test
