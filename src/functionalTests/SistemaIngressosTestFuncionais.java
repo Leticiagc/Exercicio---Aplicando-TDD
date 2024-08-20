@@ -18,7 +18,7 @@ import com.exemplo.meuprojeto.problema2.types.TipoIngresso;
 public class SistemaIngressosTestFuncionais {
 
     @Test
-    public void testCT01() {
+    public void testCT01AVL() {
 
         Lote lote = new Lote(1L, Arrays.asList(new Ingresso(1L, TipoIngresso.VIP, 1000.0)), 20.0, 100.0);
         lote.aplicarDesconto();
@@ -27,7 +27,7 @@ public class SistemaIngressosTestFuncionais {
     }
 
     @Test
-    public void testCT02() {
+    public void testCT02AVL() {
 
         Ingresso ingresso = new Ingresso(1L, TipoIngresso.MEIA_ENTRADA, 100.0);
         Lote lote = new Lote(1L, Arrays.asList(ingresso), 10.0, 100.0);
@@ -37,14 +37,14 @@ public class SistemaIngressosTestFuncionais {
     }
 
     @Test
-    public void testCT03() {
+    public void testCT03AVL() {
         Lote lote = new Lote(1L, Arrays.asList(new Ingresso(1L, TipoIngresso.VIP, 200.0)), 19.0, 100.0);
 
         Assertions.assertThrows(IllegalArgumentException.class, lote::aplicarDesconto);
     }
 
     @Test
-    public void testCT04() {
+    public void testCT04AVL() {
 
         Lote lote = new Lote(1L, Arrays.asList(new Ingresso(1L, TipoIngresso.VIP, 200.0)), 31.0, 100.0);
 
@@ -52,7 +52,7 @@ public class SistemaIngressosTestFuncionais {
     }
 
     @Test
-    public void testCT05() {
+    public void testCT05AVL() {
 
         Ingresso ingresso = new Ingresso(1L, TipoIngresso.VIP, 200.0);
         Lote lote = new Lote(1L, Arrays.asList(ingresso), 25.0, 100.0);
@@ -62,14 +62,14 @@ public class SistemaIngressosTestFuncionais {
     }
 
     @Test
-    public void testCT06() {
+    public void testCT06AVL() {
         Lote lote = new Lote(1L, Arrays.asList(new Ingresso(1L, TipoIngresso.MEIA_ENTRADA, 50.0)), 9.0, 100.0); // Desconto
                                                                                                                 // de 9%
         Assertions.assertThrows(IllegalArgumentException.class, lote::aplicarDesconto);
     }
 
     @Test
-    public void testCT07() {
+    public void testCT07AVL() {
 
         Lote loteVIP = new Lote(1L, Arrays.asList(new Ingresso(1L, TipoIngresso.VIP, 100.0)), 25.0, 100.0);
         Lote loteMeia = new Lote(2L, Arrays.asList(new Ingresso(2L, TipoIngresso.MEIA_ENTRADA, 50.0)), 10.0, 50.0);
@@ -96,7 +96,7 @@ public class SistemaIngressosTestFuncionais {
     }
 
     @Test
-    public void testCT08() {
+    public void testCT08AVL() {
 
         Lote loteVIP = new Lote(1L, Arrays.asList(new Ingresso(1L, TipoIngresso.VIP, 100.0)), 25.0, 100.0);
         Lote loteMeia = new Lote(2L, Arrays.asList(new Ingresso(2L, TipoIngresso.MEIA_ENTRADA, 50.0)), 10.0, 50.0);
@@ -120,7 +120,7 @@ public class SistemaIngressosTestFuncionais {
     }
 
     @Test
-    public void testCT09() {
+    public void testCT09AVL() {
 
         Lote loteVIP = new Lote(1L, Arrays.asList(new Ingresso(1L, TipoIngresso.VIP, 100.0)), 25.0, 100.0);
         Lote loteMeia = new Lote(2L, Arrays.asList(new Ingresso(2L, TipoIngresso.MEIA_ENTRADA, 50.0)), 10.0, 50.0);
@@ -144,7 +144,7 @@ public class SistemaIngressosTestFuncionais {
     }
 
     @Test
-    public void testCT10() {
+    public void testCT10AVL() {
 
         Lote loteVIP = new Lote(1L, Arrays.asList(new Ingresso(1L, TipoIngresso.VIP, 100.0)), 25.0, 100.0);
         Lote loteMeia = new Lote(2L, Arrays.asList(new Ingresso(2L, TipoIngresso.MEIA_ENTRADA, 50.0)), 10.0, 50.0);
@@ -167,7 +167,7 @@ public class SistemaIngressosTestFuncionais {
     }
 
     @Test
-    public void testCT11() {
+    public void testCT11AVL() {
 
         Lote loteVIP = new Lote(1L, Arrays.asList(new Ingresso(1L, TipoIngresso.VIP, 25.0)), 25.0, 100.0);
         Lote loteMeia = new Lote(2L, Arrays.asList(new Ingresso(2L, TipoIngresso.MEIA_ENTRADA, 10.0)), 10.0, 50.0);
@@ -188,7 +188,7 @@ public class SistemaIngressosTestFuncionais {
         Assertions.assertEquals(receitaBruta - despesasTotais, relatorio.getReceitaLiquida(), 0.01);
         Assertions.assertEquals(StatusFinanceiro.LUCRO, relatorio.getStatusFinanceiro());
     }
-
+    // aqui são os testes que fiz baseado em tabelas de decisão!
     @Test
     public void testDecisionTable1() {
 
